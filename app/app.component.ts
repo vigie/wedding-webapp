@@ -15,7 +15,6 @@ import {Router} from 'angular2/router';
     <router-outlet></router-outlet>
     `,
     directives: [ROUTER_DIRECTIVES],
-    providers: [GuestService],
     styleUrls: ['app/app.css']
 })
 @RouteConfig([
