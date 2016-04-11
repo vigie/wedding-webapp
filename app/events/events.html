@@ -1,19 +1,20 @@
 <h2>{{welcomeMessage}}</h2>
 <h3>Please let us know which of the following events you will be joining us for:</h3>
+<button (click)="rsvp()">Save Changes</button>
 <ul>
     <li *ngIf="guest.events.guernsey.invited">
-        <a>Guernsey</a>
-        <input type="radio" name="rsvpGuernsey" value="yes">Yes
-        <input type="radio" name="rsvpGuernsey" value="no">No
+        <a [routerLink]="['Guernsey']">Guernsey</a>
+        <input type="radio" name="rsvpGuernsey" value="yes" (click)="rsvpGuernsey = 'yes'" [checked]="rsvpGuernsey === 'yes'">Yes
+        <input type="radio" name="rsvpGuernsey" value="no" (click)="rsvpGuernsey = 'no'" [checked]="rsvpGuernsey === 'no'">No
     </li>
     <li *ngIf="guest.events.sanFrancisco.invited">
-        <a>San Francisco</a>
-        <input type="radio" name="rsvpSF" value="yes">Yes
-        <input type="radio" name="rsvpSF" value="no">No
+        <a [routerLink]="['SF']">San Francisco</a>
+        <input type="radio" name="rsvpSF" value="yes" (click)="rsvpSF = 'yes'" [checked]="rsvpSF === 'yes'">Yes
+        <input type="radio" name="rsvpSF" value="no" (click)="rsvpSF = 'no'" [checked]="rsvpSF === 'no'">No
     </li>
     <li *ngIf="guest.events.santaCruz.invited">
-        <a>Santa Cruz</a>
-        <input type="radio" name="rsvpSC" value="yes">Yes
-        <input type="radio" name="rsvpSC" value="no">No
+        <a [routerLink]="['SC']">Santa Cruz</a>
+        <input type="radio" name="rsvpSC" value="yes" (click)="rsvpSC = 'yes'" [checked]="rsvpSC === 'yes'">Yes
+        <input type="radio" name="rsvpSC" value="no" (click)="rsvpSC = 'no'" [checked]="rsvpSC === 'no'">No
     </li>
 </ul>

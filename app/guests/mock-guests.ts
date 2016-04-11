@@ -12,7 +12,7 @@ export let GUESTS: Guest[] = [
             'guernsey': {
                 id: 'guernsey',
                 invited: false,
-                attending: 'unknown'
+                attending: 'no'
             },
             'sanFrancisco': {
                 id: 'sanFrancisco',

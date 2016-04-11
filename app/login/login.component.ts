@@ -3,7 +3,8 @@ import {GuestService} from '../guests/guests.service';
 import {Guest} from '../guests/guest';
 import {Control, FORM_DIRECTIVES, ControlGroup, Validators, FormBuilder} from 'angular2/common';
 import {EmailValidator} from './email.validator';
-import {Router} from 'angular2/router';
+import {Router, CanActivate} from 'angular2/router';
+import {appInjector} from '../app-injector';
 
 @Component({
   selector: 'mt-login',
@@ -16,6 +17,16 @@ import {Router} from 'angular2/router';
   `,
   styleUrls: ['app/login/login.css'],
   directives: [FORM_DIRECTIVES]
+})
+@CanActivate((next, prev) => {
+    let injector = appInjector(false);
+    let guestService = injector.get(GuestService);
+    let router = injector.get(Router);
+    if(guestService.loggedInGuest) {
+        router.navigate(['Events']);
+        return false;
+    }
+    return true;
 })
 export class LoginComponent {
     
