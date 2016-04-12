@@ -8,13 +8,7 @@ import {appInjector} from '../app-injector';
 
 @Component({
   selector: 'mt-login',
-  template: `
-  <h2>{{welcomeMessage}}</h2>
-  <form [ngFormModel]="form">
-    <input type="string" #email required ngControl="emailControl">
-    <button (click)="login($event, email.value)" [disabled]="!form.valid">log in</button>
-  </form>
-  `,
+  templateUrl: 'app/login/login.html',
   styleUrls: ['app/login/login.css'],
   directives: [FORM_DIRECTIVES]
 })
@@ -31,25 +25,48 @@ import {appInjector} from '../app-injector';
 })
 export class LoginComponent {
     
-    private _welcomeMessage = 'Hello stranger! Let us know who you are by entering your email below:'
+    private _initialGreeting = 'Hello stranger! Let us know who you are by entering your email below:';
+    private _welcomeMessage: string;
     get welcomeMessage(): string {
         let user = this._guestService.loggedInGuest;
         return user ? user.welcomeMessage : this._welcomeMessage;
     }
     
+    email: string;
+    name: string;
+    
     form: ControlGroup;
     
     emailControl: Control;
+    nameControl: Control;
+        
+    LOGIN = 'login';
+    SEND_EMAIL = 'send_email';
+    EMAIL_SENT = 'email_sent';
     
-    login($event: Event, email: string) {
-        this._guestService.getGuestByEmail(email)
+    pageState;
+    
+    formValid(): boolean {
+        if (this.pageState === this.LOGIN) {
+            return this.emailControl.valid;
+        } else if (this.pageState === this.SEND_EMAIL) {
+            return this.emailControl.valid && this.nameControl.valid;
+        }
+        return true;
+    }
+
+    
+    login($event: Event) {
+        this._guestService.getGuestByEmail(this.email)
             .subscribe( guest => {
                 if (!guest) {
                     this._guestService.loggedInGuest = null;
                     this._welcomeMessage = `Sorry, we seem to have a different email address for you. Tell us your name so we can update our records.`
+                    this.pageState = this.SEND_EMAIL;
                     return;
                 }
                 this._guestService.loggedInGuest = guest;
+                this.email = '';
                 event.preventDefault();
                 event.stopPropagation();
                 this._router.navigate(['Events', {}]);
@@ -59,12 +76,28 @@ export class LoginComponent {
             });
     }
     
-    constructor(private _guestService: GuestService, private _builder: FormBuilder, private _router: Router) {
-
+    sendEmail() {
+        Promise.resolve().then(() => {
+            this._welcomeMessage = `Thanks ${this.name}, we received your message and will update our records with the correct email ASAP.`;
+            this.pageState = this.EMAIL_SENT;
+        })
+    }
     
+    backToLogin() {
+        this.email = '';
+        this.name = '';
+        this.pageState = this.LOGIN;
+        this._welcomeMessage = this._initialGreeting;
+    }
+    
+    constructor(private _guestService: GuestService, private _builder: FormBuilder, private _router: Router) {
+        this.pageState = this.LOGIN;
+        this._welcomeMessage = this._initialGreeting;
         this.emailControl = new Control('', Validators.compose([Validators.required, EmailValidator.emailFormat]) );
-                    this.form = this._builder.group({
-                emailControl: this.emailControl
-            });
+        this.nameControl = new Control('', Validators.compose([Validators.required]) );
+        this.form = this._builder.group({
+            emailControl: this.emailControl,
+            nameControl: this.nameControl
+        });
     }
 }

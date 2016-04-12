@@ -1,0 +1,8 @@
+<h2>{{welcomeMessage}}</h2>
+<form [ngFormModel]="form">
+    <input [hidden]="pageState === EMAIL_SENT" [(ngModel)]="email" type="email" name="email" required ngControl="emailControl" placeholder="email">
+    <input [hidden]="pageState !== SEND_EMAIL" [(ngModel)]="name" type="text" name="name" required ngControl="nameControl" placeholder="Name">
+    <button [hidden]="pageState !== LOGIN" (click)="login($event)" [disabled]="!formValid()">Log in</button>
+    <button [hidden]="pageState !== SEND_EMAIL" (click)="sendEmail()" [disabled]="!formValid()">Send</button>
+    <button [hidden]="pageState !== EMAIL_SENT" (click)="backToLogin()">Back to login</button>
+</form>
