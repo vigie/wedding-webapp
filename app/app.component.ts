@@ -13,7 +13,7 @@ import {SCComponent} from './santa-cruz/sc.component';
     template: `
     <nav>
         <h1>Matt and Tamara's Wedding Website</h1>
-        <p *ngIf="guestService.loggedInGuest">Not {{guestService.loggedInGuest.firstName}}? <a (click)="logOut($event)">log out</a>
+        <p *ngIf="guestService.loggedInGuest">Not {{guestService.loggedInGuest?.firstName}}? <a (click)="logOut($event)">log out</a>
     </nav>
     <router-outlet></router-outlet>
     `,
@@ -28,7 +28,7 @@ import {SCComponent} from './santa-cruz/sc.component';
   {path:'/events/sc', name: 'SC', component: SCComponent},
   {path: '/**', redirectTo: ['Events']}
 ])
-export class AppComponent { 
+export class AppComponent {
     
     logOut($event: Event) {
         this.guestService.loggedInGuest = null;
@@ -37,5 +37,6 @@ export class AppComponent {
         this._router.navigate(['Login']);
     }
     
-    constructor (public guestService: GuestService, private _router: Router) {}
+    constructor (public guestService: GuestService, private _router: Router) {
+    }
 }

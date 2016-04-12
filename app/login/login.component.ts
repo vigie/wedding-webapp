@@ -22,11 +22,12 @@ import {appInjector} from '../app-injector';
     let injector = appInjector(false);
     let guestService = injector.get(GuestService);
     let router = injector.get(Router);
-    if(guestService.loggedInGuest) {
-        router.navigate(['Events']);
-        return false;
-    }
-    return true;
+    return guestService.getLoggedInGuest()
+        .then(() => {
+            router.navigate(['Events']);
+            return false;
+        })
+        .catch(() => true);
 })
 export class LoginComponent {
     
@@ -43,14 +44,18 @@ export class LoginComponent {
     login($event: Event, email: string) {
         this._guestService.getGuestByEmail(email)
             .subscribe( guest => {
+                if (!guest) {
+                    this._guestService.loggedInGuest = null;
+                    this._welcomeMessage = `Sorry, we seem to have a different email address for you. Tell us your name so we can update our records.`
+                    return;
+                }
                 this._guestService.loggedInGuest = guest;
                 event.preventDefault();
                 event.stopPropagation();
                 this._router.navigate(['Events', {}]);
             },
             error => {
-                this._guestService.loggedInGuest = null;
-                this._welcomeMessage = `Sorry, we seem to have a different email address for you. Tell us your name so we can update our records.`
+
             });
     }
     

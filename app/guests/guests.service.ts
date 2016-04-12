@@ -25,6 +25,24 @@ export class GuestService {
         return this._loggedInGuest;
     }
     
+    getLoggedInGuest(): Promise<any> {
+        if (this._loggedInGuest) {
+            return Promise.resolve(this._loggedInGuest);
+        }
+        // Check cookie
+        let userCookie = this._cookieService.get('user');
+        if (userCookie) {
+            return this.getGuestById(userCookie)
+                .toPromise()
+                .then( user => {
+                    this.loggedInGuest = user;
+                    return user;
+                })
+        } else {
+            return Promise.reject(null);
+        }
+    }
+    
     // getGuests() {
     //     return Promise.resolve(GUESTS);
     // }

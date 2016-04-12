@@ -12,14 +12,19 @@ import {GuestService} from '../guests/guests.service';
     let injector = appInjector(false);
     let guestService = injector.get(GuestService);
     let router = injector.get(Router);
-    if(!guestService.loggedInGuest) {
-        router.navigate(['Login']);
-        return false;
-    }
-    if (!guestService.loggedInGuest.events.guernsey.invited) {
-        router.navigate(['Events']);
-        return false;
-    }
-    return true;
+    
+    return guestService.getLoggedInGuest()
+        .then((guest) => {
+            if(!guest.events.guernsey.invited) {
+                router.navigate(['Events']);
+                return false;
+            } else {
+                return true;
+            }
+        })
+        .catch(() => {
+            router.navigate(['Login']);
+            return false;
+        });
 })
 export class GuernseyComponent{}

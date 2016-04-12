@@ -12,13 +12,14 @@ import {Router, ROUTER_DIRECTIVES} from 'angular2/router';
 })
 @CanActivate((next, prev) => {
     let injector = appInjector(false);
-    let guestService = injector.get(GuestService);
+    let guestService: GuestService = injector.get(GuestService);
     let router = injector.get(Router);
-    if(!guestService.loggedInGuest) {
-        router.navigate(['Login']);
-        return false;
-    }
-    return true;
+    return guestService.getLoggedInGuest()
+        .then(() => true)
+        .catch(() => {
+            router.navigate(['Login']);
+            return false;
+        });
 })
 export class EventsComponent {
     
@@ -37,10 +38,13 @@ export class EventsComponent {
     }
     
     constructor(public _guestService: GuestService) {
-        this.guest = _guestService.loggedInGuest;
-        this.welcomeMessage = _guestService.loggedInGuest.welcomeMessage;
-        this.rsvpGuernsey = this.guest.events.guernsey.attending;
-        this.rsvpSF = this.guest.events.sanFrancisco.attending;
-        this.rsvpSC = this.guest.events.santaCruz.attending;
+        _guestService.getLoggedInGuest()
+            .then(guest => {
+                this.guest = guest;
+                this.welcomeMessage = guest.welcomeMessage
+                this.rsvpGuernsey = guest.events.guernsey.attending;
+                this.rsvpSF = guest.events.sanFrancisco.attending;
+                this.rsvpSC = guest.events.santaCruz.attending;
+            });
     }
 }

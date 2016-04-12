@@ -14,11 +14,4 @@ bootstrap(AppComponent, [
     CookieService
 ]).then(appRef => {
     appInjector(appRef.injector);
-    let guestService: GuestService = appRef.injector.get(GuestService);
-    let cookieService: CookieService = appRef.injector.get(CookieService);
-    let userCookie = cookieService.get('user');
-    if (userCookie) {
-        guestService.getGuestById(userCookie)
-            .subscribe (user => guestService.loggedInGuest = user);
-    }
 });
