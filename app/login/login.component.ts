@@ -42,13 +42,13 @@ export class LoginComponent {
     
     login($event: Event, email: string) {
         this._guestService.getGuestByEmail(email)
-            .then( guest => {
+            .subscribe( guest => {
                 this._guestService.loggedInGuest = guest;
                 event.preventDefault();
                 event.stopPropagation();
                 this._router.navigate(['Events', {}]);
-            })
-            .catch(() => {
+            },
+            error => {
                 this._guestService.loggedInGuest = null;
                 this._welcomeMessage = `Sorry, we seem to have a different email address for you. Tell us your name so we can update our records.`
             });

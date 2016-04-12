@@ -2,7 +2,7 @@ import {Guest} from './guest';
 
 export let GUESTS: Guest[] = [
     {
-        id: 1,
+        _id: '1',
         firstName: 'Kat',
         lastName: 'Corden',
         email: 'kat.corden@wonderful.com',        
@@ -27,7 +27,7 @@ export let GUESTS: Guest[] = [
         }
     },
     {
-        id: 2,
+        _id: '2',
         firstName: 'Dan',
         lastName: 'Colwill',
         email: 'dancolwill@hotmail.com',        

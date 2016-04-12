@@ -4,9 +4,12 @@ import {ROUTER_PROVIDERS} from 'angular2/router';
 import {appInjector} from './app-injector';
 import {GuestService} from './guests/guests.service';
 import {CookieService} from 'angular2-cookie/core';
+import {HTTP_PROVIDERS} from 'angular2/http';
+import 'rxjs/Rx';
 
 bootstrap(AppComponent, [
     ROUTER_PROVIDERS,
+    HTTP_PROVIDERS,
     GuestService,
     CookieService
 ]).then(appRef => {
@@ -15,7 +18,7 @@ bootstrap(AppComponent, [
     let cookieService: CookieService = appRef.injector.get(CookieService);
     let userCookie = cookieService.get('user');
     if (userCookie) {
-        guestService.getGuestById(parseInt(userCookie, 10))
-            .then (user => guestService.loggedInGuest = user);
+        guestService.getGuestById(userCookie)
+            .subscribe (user => guestService.loggedInGuest = user);
     }
 });
