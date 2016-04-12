@@ -5,6 +5,7 @@ import {Control, FORM_DIRECTIVES, ControlGroup, Validators, FormBuilder} from 'a
 import {EmailValidator} from './email.validator';
 import {Router, CanActivate} from 'angular2/router';
 import {appInjector} from '../app-injector';
+import {EmailService} from '../email.service';
 
 @Component({
   selector: 'mt-login',
@@ -77,10 +78,17 @@ export class LoginComponent {
     }
     
     sendEmail() {
-        Promise.resolve().then(() => {
-            this._welcomeMessage = `Thanks ${this.name}, we received your message and will update our records with the correct email ASAP.`;
-            this.pageState = this.EMAIL_SENT;
-        })
+        this._emailService.sendEmail(this.email, this.name)
+            .subscribe(
+                () => {
+                    this._welcomeMessage = `Thanks ${this.name}, we received your message and will update our records with the correct email ASAP.`;
+                    this.pageState = this.EMAIL_SENT;                    
+                }
+            );
+            // .finally(() => {
+            //     this._welcomeMessage = `Thanks ${this.name}, we received your message and will update our records with the correct email ASAP.`;
+            //     this.pageState = this.EMAIL_SENT;
+            // });
     }
     
     backToLogin() {
@@ -90,7 +98,7 @@ export class LoginComponent {
         this._welcomeMessage = this._initialGreeting;
     }
     
-    constructor(private _guestService: GuestService, private _builder: FormBuilder, private _router: Router) {
+    constructor(private _guestService: GuestService, private _builder: FormBuilder, private _router: Router, private _emailService: EmailService) {
         this.pageState = this.LOGIN;
         this._welcomeMessage = this._initialGreeting;
         this.emailControl = new Control('', Validators.compose([Validators.required, EmailValidator.emailFormat]) );

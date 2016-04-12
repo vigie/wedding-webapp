@@ -7,6 +7,7 @@ import {Router} from 'angular2/router';
 import {GuernseyComponent} from './guernsey/guernsey.component';
 import {SFComponent} from './san-fran/sf.component';
 import {SCComponent} from './santa-cruz/sc.component';
+import {EmailService} from './email.service';
 
 @Component({
     selector: 'my-app',
@@ -18,6 +19,7 @@ import {SCComponent} from './santa-cruz/sc.component';
     <router-outlet></router-outlet>
     `,
     directives: [ROUTER_DIRECTIVES],
+    providers: [EmailService],
     styleUrls: ['app/app.css']
 })
 @RouteConfig([
