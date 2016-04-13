@@ -49,30 +49,19 @@ app.use(bodyParser.json({ type: 'application/vnd.api+json' })); // parse applica
 app.use(methodOverride());
 
 // define model =================
-var Todo = mongoose.model('Todo', {
-    title : String,
-    completed: Boolean
-});
- 
 var Guest = mongoose.model('Guest', {
+    _id: String,
     firstName: String,
     lastName: String,
     email: String,
-    welcomeMessage: String,
-    events: {
-        guernsey: {
-            invited: Boolean,
-            attending: String
-        },
-        santaCruz: {
-            invited: Boolean,
-            attending: String
-        },
-        sanFrancisco: {
-            invited: Boolean,
-            attending: String
-        }
-    }
+    welcomeMsg: String,
+    plusOne: String,
+    gsy_invite: String,
+    sf_invite: String,
+    sc_invite: String,
+    gsy_response: String,
+    sf_response: String,
+    sc_response: String
  });
 
 // routes ======================================================================

@@ -16,6 +16,9 @@ export class GuestService {
         if (!value) {
             this._cookieService.remove('user');       
         } else {
+            if (!value.welcomeMsg) {
+                value.welcomeMsg = `Hi ${value.firstName}.`;
+            }
             this._cookieService.put('user', value._id.toString());
         }
 

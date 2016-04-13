@@ -5,7 +5,12 @@ export class Guest {
     firstName: string;
     lastName: string;
     email: string;
-    welcomeMessage: string;
+    welcomeMsg: string;
     plusOne: string;
-    events: any;
+    gsy_invite: string;
+    sf_invite: string;
+    sc_invite: string;
+    gsy_response: string;
+    sf_response: string;
+    sc_response: string;
 }

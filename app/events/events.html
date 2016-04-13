@@ -1,41 +1,41 @@
-<h2>{{guest?.welcomeMessage}}</h2>
+<h2>{{guest?.welcomeMsg}}</h2>
 <h3>Please let us know which of the following events you will be joining us for:</h3>
 <button (click)="rsvp()">Save Changes</button>
 <div class="rsvp">
 <div>
     <p>Coming {{guest?.firstName}}?</p>
 <ul>
-    <li *ngIf="guest && guest?.events.guernsey.invited" class="rsvp-item">
+    <li *ngIf="guest && guest?.gsy_invite === 'yes'" class="rsvp-item">
         <a [routerLink]="['Guernsey']">Guernsey</a>
-        <input type="radio" name="rsvpGuernsey" value="yes" (click)="guest?.events.guernsey.attending = 'yes'" [checked]="guest?.events.guernsey.attending === 'yes'">Yes
-        <input type="radio" name="rsvpGuernsey" value="no" (click)="guest?.events.guernsey.attending = 'no'" [checked]="guest?.events.guernsey.attending === 'no'">No
+        <input type="radio" name="rsvpGuernsey" value="yes" (click)="guest.gsy_response = 'yes'" [checked]="guest?.gsy_response === 'yes'">Yes
+        <input type="radio" name="rsvpGuernsey" value="no" (click)="guest.gsy_response = 'no'" [checked]="guest?.gsy_response === 'no'">No
     </li>
-    <li *ngIf="guest && guest?.events.sanFrancisco.invited" class="rsvp-item">
+    <li *ngIf="guest && guest?.sf_invite === 'yes'" class="rsvp-item">
         <a [routerLink]="['SF']">San Francisco</a>
-        <input type="radio" name="rsvpSF" value="yes" (click)="guest?.events.sanFrancisco.attending = 'yes'" [checked]="guest?.events.sanFrancisco.attending === 'yes'">Yes
-        <input type="radio" name="rsvpSF" value="no" (click)="guest?.events.sanFrancisco.attending = 'no'" [checked]="guest?.events.sanFrancisco.attending === 'no'">No
+        <input type="radio" name="rsvpSF" value="yes" (click)="guest.sf_response = 'yes'" [checked]="guest?.sf_response === 'yes'">Yes
+        <input type="radio" name="rsvpSF" value="no" (click)="guest.sf_response = 'no'" [checked]="guest?.sf_response === 'no'">No
     </li>
-    <li *ngIf="guest && guest?.events.santaCruz.invited" class="rsvp-item">
+    <li *ngIf="guest && guest?.sc_invite === 'yes'" class="rsvp-item">
         <a [routerLink]="['SC']">Santa Cruz</a>
-        <input type="radio" name="rsvpSC" value="yes" (click)="guest?.events.santaCruz.attending = 'yes'" [checked]="guest?.events.santaCruz.attending === 'yes'">Yes
-        <input type="radio" name="rsvpSC" value="no" (click)="guest?.events.santaCruz.attending = 'no'" [checked]="guest?.events.santaCruz.attending === 'no'">No
+        <input type="radio" name="rsvpSC" value="yes" (click)="guest.sc_response = 'yes'" [checked]="guest?.sc_response === 'yes'">Yes
+        <input type="radio" name="rsvpSC" value="no" (click)="guest.sc_response = 'no'" [checked]="guest?.sc_response === 'no'">No
     </li>
 </ul>
 </div>
 <div *ngIf="plusOne">
-    <p>Plus one joining?</p>
+    <p>{{plusOne?.firstName}} joining?</p>
     <ul>
-        <li class="rsvp-item">
-            <input type="radio" name="plusOneRsvpGuernsey" value="yes" (click)="plusOne?.events.guernsey.attending = 'yes'" [checked]="plusOne?.events.guernsey.attending === 'yes'">Yes
-            <input type="radio" name="plusOneRsvpGuernsey" value="no" (click)="plusOne?.events.guernsey.attending = 'no'" [checked]="plusOne?.events.guernsey.attending === 'no'">No
+        <li *ngIf="plusOne && plusOne?.gsy_invite === 'yes'" class="rsvp-item">
+            <input type="radio" name="plusOneRsvpGuernsey" value="yes" (click)="plusOne.gsy_response = 'yes'" [checked]="plusOne?.gsy_response === 'yes'">Yes
+            <input type="radio" name="plusOneRsvpGuernsey" value="no" (click)="plusOne.gsy_response = 'no'" [checked]="plusOne?.gsy_response === 'no'">No
         </li>
-        <li class="rsvp-item">
-            <input type="radio" name="plusOneRsvpSF" value="yes" (click)="plusOne?.events.sanFrancisco.attending = 'yes'" [checked]="plusOne?.events.sanFrancisco.attending === 'yes'">Yes
-            <input type="radio" name="plusOneRsvpSF" value="no" (click)="plusOne?.events.sanFrancisco.attending = 'no'" [checked]="plusOne?.events.sanFrancisco.attending === 'no'">No            
+        <li *ngIf="plusOne && plusOne?.sf_invite === 'yes'" class="rsvp-item">
+            <input type="radio" name="plusOneRsvpSF" value="yes" (click)="plusOne.sf_response = 'yes'" [checked]="plusOne?.sf_response === 'yes'">Yes
+            <input type="radio" name="plusOneRsvpSF" value="no" (click)="plusOne.sf_response = 'no'" [checked]="plusOne?.sf_response === 'no'">No            
         </li>
-        <li class="rsvp-item">
-            <input type="radio" name="plusOneRsvpSC" value="yes" (click)="plusOne?.events.santaCruz.attending = 'yes'" [checked]="plusOne?.events.santaCruz.attending === 'yes'">Yes
-            <input type="radio" name="plusOneRsvpSC" value="no" (click)="plusOne?.events.santaCruz.attending = 'no'" [checked]="plusOne?.events.santaCruz.attending === 'no'">No        
+        <li *ngIf="plusOne && plusOne?.sc_invite === 'yes'" class="rsvp-item">
+            <input type="radio" name="plusOneRsvpSC" value="yes" (click)="plusOne.sc_response = 'yes'" [checked]="plusOne?.sc_response === 'yes'">Yes
+            <input type="radio" name="plusOneRsvpSC" value="no" (click)="plusOne.sc_response = 'no'" [checked]="plusOne?.sc_response === 'no'">No        
         </li>
     </ul>
 </div>

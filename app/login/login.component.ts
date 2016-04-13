@@ -30,7 +30,7 @@ export class LoginComponent {
     private _welcomeMessage: string;
     get welcomeMessage(): string {
         let user = this._guestService.loggedInGuest;
-        return user ? user.welcomeMessage : this._welcomeMessage;
+        return user ? user.welcomeMsg : this._welcomeMessage;
     }
     
     email: string;

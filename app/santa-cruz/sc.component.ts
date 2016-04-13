@@ -14,7 +14,7 @@ import {GuestService} from '../guests/guests.service';
     let router = injector.get(Router);
     return guestService.getLoggedInGuest()
         .then((guest) => {
-            if(!guest.events.santaCruz.invited) {
+            if(guest.sc_invite === 'no') {
                 router.navigate(['Events']);
                 return false;
             } else {
