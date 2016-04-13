@@ -2,7 +2,7 @@ import {Injectable} from 'angular2/core';
 import {Guest} from './guest';
 import {GUESTS} from './mock-guests';
 import {CookieService} from 'angular2-cookie/core';
-import {Http, Response} from 'angular2/http';
+import {Http, Response, Headers, RequestOptions} from 'angular2/http';
 import {Observable}     from 'rxjs/Observable'
 
 @Injectable()
@@ -83,6 +83,13 @@ export class GuestService {
     //     });
     //     return promise;
     // }
+    
+    updateGuests(guests: Guest[]) {
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+        let body = JSON.stringify(guests);
+        return this._http.put(GuestService._guestsURL, body, options);
+    }
     
     getGuestByEmail(email: string) {
         email = email.toLowerCase();

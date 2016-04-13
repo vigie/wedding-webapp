@@ -1,20 +1,20 @@
-<h2>{{welcomeMessage}}</h2>
+<h2>{{guest?.welcomeMessage}}</h2>
 <h3>Please let us know which of the following events you will be joining us for:</h3>
 <button (click)="rsvp()">Save Changes</button>
 <ul>
-    <li *ngIf="guest.events.guernsey.invited">
+    <li *ngIf="guest && guest?.events.guernsey.invited">
         <a [routerLink]="['Guernsey']">Guernsey</a>
-        <input type="radio" name="rsvpGuernsey" value="yes" (click)="rsvpGuernsey = 'yes'" [checked]="rsvpGuernsey === 'yes'">Yes
-        <input type="radio" name="rsvpGuernsey" value="no" (click)="rsvpGuernsey = 'no'" [checked]="rsvpGuernsey === 'no'">No
+        <input type="radio" name="rsvpGuernsey" value="yes" (click)="guest?.events.guernsey.attending = 'yes'" [checked]="guest?.events.guernsey.attending === 'yes'">Yes
+        <input type="radio" name="rsvpGuernsey" value="no" (click)="guest?.events.guernsey.attending = 'no'" [checked]="guest?.events.guernsey.attending === 'no'">No
     </li>
-    <li *ngIf="guest.events.sanFrancisco.invited">
+    <li *ngIf="guest && guest?.events.sanFrancisco.invited">
         <a [routerLink]="['SF']">San Francisco</a>
-        <input type="radio" name="rsvpSF" value="yes" (click)="rsvpSF = 'yes'" [checked]="rsvpSF === 'yes'">Yes
-        <input type="radio" name="rsvpSF" value="no" (click)="rsvpSF = 'no'" [checked]="rsvpSF === 'no'">No
+        <input type="radio" name="rsvpSF" value="yes" (click)="guest?.events.sanFrancisco.attending = 'yes'" [checked]="guest?.events.sanFrancisco.attending === 'yes'">Yes
+        <input type="radio" name="rsvpSF" value="no" (click)="guest?.events.sanFrancisco.attending = 'no'" [checked]="guest?.events.sanFrancisco.attending === 'no'">No
     </li>
-    <li *ngIf="guest.events.santaCruz.invited">
+    <li *ngIf="guest && guest?.events.santaCruz.invited">
         <a [routerLink]="['SC']">Santa Cruz</a>
-        <input type="radio" name="rsvpSC" value="yes" (click)="rsvpSC = 'yes'" [checked]="rsvpSC === 'yes'">Yes
-        <input type="radio" name="rsvpSC" value="no" (click)="rsvpSC = 'no'" [checked]="rsvpSC === 'no'">No
+        <input type="radio" name="rsvpSC" value="yes" (click)="guest?.events.santaCruz.attending = 'yes'" [checked]="guest?.events.santaCruz.attending === 'yes'">Yes
+        <input type="radio" name="rsvpSC" value="no" (click)="guest?.events.santaCruz.attending = 'no'" [checked]="guest?.events.santaCruz.attending === 'no'">No
     </li>
 </ul>

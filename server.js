@@ -61,15 +61,15 @@ var Guest = mongoose.model('Guest', {
     welcomeMessage: String,
     events: {
         guernsey: {
-            inivited: Boolean,
+            invited: Boolean,
             attending: String
         },
         santaCruz: {
-            inivited: Boolean,
+            invited: Boolean,
             attending: String
         },
         sanFrancisco: {
-            inivited: Boolean,
+            invited: Boolean,
             attending: String
         }
     }
@@ -100,6 +100,32 @@ app.post('/api/email', function(req, res) {
             }
         });    
     
+});
+
+app.put('/api/guests', function(req, res) {
+    var guests = req.body;
+    //console.log(guests);
+    var options = {
+        upsert: false,
+        new: true
+    }
+    var updatedGuests = [];
+    var count = guests.length;
+    guests.forEach(function(guest) {
+        var id = guest._id;
+        delete guest._id;
+        Guest.findByIdAndUpdate(id, guest, function(err, doc) {
+            if (err) {
+                res.send(err);
+            } else {
+                count--;
+                updatedGuests.push(doc);
+                if (count === 0) {
+                    res.send(updatedGuests);
+                }
+            }
+        });
+    }, this);
 });
 
 // Get guest by email
