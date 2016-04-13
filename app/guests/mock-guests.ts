@@ -7,7 +7,7 @@ export let GUESTS: Guest[] = [
         lastName: 'Corden',
         email: 'kat.corden@wonderful.com',        
         welcomeMessage: 'Hi bestie :-)',
-        plusOne: -1,
+        plusOne: '',
         events: {
             'guernsey': {
                 id: 'guernsey',
@@ -32,7 +32,7 @@ export let GUESTS: Guest[] = [
         lastName: 'Colwill',
         email: 'dancolwill@hotmail.com',        
         welcomeMessage: 'Alright Mum you old tart?',
-        plusOne: -1,
+        plusOne: '',
         events: {
             'guernsey': {
                 id: 'guernsey',

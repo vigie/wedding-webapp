@@ -1,0 +1,16 @@
+.rsvp {
+    display: flex;
+}
+
+li {
+    line-height: 30px;
+}
+
+.rsvp-item {
+    display: flex;
+    align-content: center;
+}
+
+.rsvp-item > a {
+    flex: 1;
+}

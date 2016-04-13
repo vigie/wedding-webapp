@@ -6,6 +6,6 @@ export class Guest {
     lastName: string;
     email: string;
     welcomeMessage: string;
-    plusOne: number;
+    plusOne: string;
     events: any;
 }

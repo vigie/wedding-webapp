@@ -8,7 +8,8 @@ import {Router, ROUTER_DIRECTIVES} from 'angular2/router';
 
 @Component({
   templateUrl: 'app/events/events.html',
-  directives: [ROUTER_DIRECTIVES]
+  directives: [ROUTER_DIRECTIVES],
+  styleUrls: ['app/events/events.css']
 })
 @CanActivate((next, prev) => {
     let injector = appInjector(false);
@@ -23,7 +24,8 @@ import {Router, ROUTER_DIRECTIVES} from 'angular2/router';
 })
 export class EventsComponent implements OnInit {
     
-    guest: Guest
+    guest: Guest;
+    plusOne: Guest;
     
     rsvp() {
         this._guestService.updateGuests([this.guest]).subscribe(
@@ -34,8 +36,12 @@ export class EventsComponent implements OnInit {
     
     ngOnInit() {
         this._guestService.getLoggedInGuest()
-            .then(guest => {
+            .then((guest: Guest) => {
                 this.guest = guest;
+                if (guest.plusOne) {
+                    this._guestService.getGuestById(guest.plusOne)
+                        .subscribe(plusOne => this.plusOne = plusOne);
+                }
             });
     }
     
