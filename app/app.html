@@ -1,0 +1,5 @@
+<header class="container-fluid">
+    <h2 class="col-xs-10">Matt and Tamara's Wedding Website</h2>
+    <p class="col-xs-2" *ngIf="guestService.loggedInGuest">Not {{guestService.loggedInGuest?.firstName}}? <a class="btn btn-sm btn-secondary" (click)="logOut($event)">log out</a>
+</header>
+<router-outlet></router-outlet>

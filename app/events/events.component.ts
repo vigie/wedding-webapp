@@ -27,13 +27,17 @@ export class EventsComponent implements OnInit {
     guest: Guest;
     plusOne: Guest;
     
+    showSuccessMsg = false;
+    
     rsvp() {
         let guests = [this.guest];
         if (this.plusOne) {
             guests.push(this.plusOne);
         }
         this._guestService.updateGuests(guests).subscribe(
-            updatedGuests => console.log(updatedGuests),
+            updatedGuests => {
+                this.showSuccessMsg = true;
+            },
             error => console.log(error)
         )
     }

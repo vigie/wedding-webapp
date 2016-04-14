@@ -11,13 +11,7 @@ import {EmailService} from './email.service';
 
 @Component({
     selector: 'my-app',
-    template: `
-    <nav>
-        <h1>Matt and Tamara's Wedding Website</h1>
-        <p *ngIf="guestService.loggedInGuest">Not {{guestService.loggedInGuest?.firstName}}? <a (click)="logOut($event)">log out</a>
-    </nav>
-    <router-outlet></router-outlet>
-    `,
+    templateUrl: 'app/app.html',
     directives: [ROUTER_DIRECTIVES],
     providers: [EmailService],
     styleUrls: ['app/app.css']
