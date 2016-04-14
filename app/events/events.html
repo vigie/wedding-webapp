@@ -1,4 +1,4 @@
-<div class="container-fluid">
+<!--<div class="container-fluid">-->
     
     <!-- Welcome -->
     <div class="row">    
@@ -19,7 +19,7 @@
             <!-- Guernsey event -->
             <div class="row" *ngIf="guest && guest?.gsy_invite === 'yes'">
                 <!-- Event label -->
-                <a class="col-xs-12 col-md-4" href="#" [routerLink]="['Guernsey']">Guernsey</a>
+                <a class="mt-event-link h4 col-xs-12 col-md-4" href="#" [routerLink]="['Guernsey']">Guernsey</a>
                 <!-- Guest radio -->
                 <p class="col-xs-4 hidden-md-up">{{guest?.firstName}}</p>
                 <div class="col-xs-8 col-md-4 btn-group" data-toggle="buttons">
@@ -47,7 +47,7 @@
             <!-- SF event -->
             <div class="row" *ngIf="guest && guest?.sf_invite === 'yes'">
                 <!-- Event label -->
-                <a class="col-xs-12 col-md-4" href="#" [routerLink]="['SF']">San Francisco</a>
+                <a class="mt-event-link h4 col-xs-12 col-md-4" href="#" [routerLink]="['SF']">San Francisco</a>
                 <!-- Guest radio -->
                 <p class="col-xs-4 hidden-md-up">{{guest?.firstName}}</p>
                 <div class="col-xs-8 col-md-4 btn-group" data-toggle="buttons">
@@ -75,7 +75,7 @@
             <!-- SC event -->
             <div class="row" *ngIf="guest && guest?.sc_invite === 'yes'">
                 <!-- Event label -->
-                <a class="col-xs-12 col-md-4" href="#" [routerLink]="['SC']">Santa Cruz</a>
+                <a class="mt-event-link h4 col-xs-12 col-md-4" href="#" [routerLink]="['SC']">Santa Cruz</a>
                 <!-- Guest radio -->
                 <p class="col-xs-4 hidden-md-up">{{guest?.firstName}}</p>
                 <div class="col-xs-8 col-md-4 btn-group" data-toggle="buttons">
@@ -119,4 +119,4 @@
         </div>      
     </div>
     
-</div>
+<!--</div>-->

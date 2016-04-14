@@ -1,5 +1,8 @@
+<div class="row">
 <h3>{{welcomeMessage}}</h3>
+</div>
 
+<div class="row">
 <form [ngFormModel]="form">
     <fieldset class="form-group row" *ngIf="pageState !== EMAIL_SENT">
         <label for="email" class="col-xs-12">Email address</label>
@@ -19,3 +22,4 @@
     </span>
     <button class="btn btn-info" *ngIf="pageState !== LOGIN" (click)="backToLogin()">Back to login</button>
 </form>
+</div>

@@ -1,12 +1,22 @@
-<header class="container-fluid">
-    <p class="mt-logout" [style.visibility]="guestService?.loggedInGuest ? 'visible' : 'hidden' "  >
-        Not {{guestService.loggedInGuest?.firstName}} {{guestService.loggedInGuest?.lastName}}? 
-        <a class="btn btn-sm btn-secondary" (click)="logOut($event)">log out</a>
-    </p>
-    <h2 class="mt-title">Matt and Tamara's Wedding Website</h2>
-</header>
-<section class="container-fluid">
-    <div class="col-xs-12">
-        <router-outlet></router-outlet>
+<div class="container-fluid">
+
+    <!-- Header -->
+    <div class="row">
+        <header class="mt-header">
+            <img [src]="headerImage" class="img-fluid mt-header-img">
+        </header>
     </div>
-</section>
+
+    <!-- Log out -->
+    <div class="row">
+        <div class=" mt-logout" [hidden]="!guestService?.loggedInGuest">
+            <p class="mt-guest-name">    
+            Not {{guestService?.loggedInGuest?.firstName}} {{guestService?.loggedInGuest?.lastName}}?           
+            </p>
+            <a class="mt-logout-btn btn btn-sm btn-secondary" (click)="logOut($event)">log out</a>                          
+        </div>    
+    </div>
+
+    <!-- Main -->
+    <router-outlet></router-outlet>
+</div>

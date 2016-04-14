@@ -4,9 +4,7 @@ import {appInjector} from '../app-injector';
 import {GuestService} from '../guests/guests.service';
 
 @Component({
-    template: `
-    <h2>San Francisco</h2>
-    `
+    templateUrl: 'app/san-fran/sf.html'
 })
 @CanActivate((next, prev) => {
     let injector = appInjector(false);

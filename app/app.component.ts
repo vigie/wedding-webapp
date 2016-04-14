@@ -3,7 +3,7 @@ import {RouteConfig, ROUTER_DIRECTIVES} from 'angular2/router';
 import {LoginComponent} from './login/login.component';
 import {EventsComponent} from './events/events.component';
 import {GuestService} from './guests/guests.service';
-import {Router} from 'angular2/router';
+import {Router, Location} from 'angular2/router';
 import {GuernseyComponent} from './guernsey/guernsey.component';
 import {SFComponent} from './san-fran/sf.component';
 import {SCComponent} from './santa-cruz/sc.component';
@@ -33,6 +33,14 @@ export class AppComponent {
         this._router.navigate(['Login']);
     }
     
-    constructor (public guestService: GuestService, private _router: Router) {
+    get headerImage() {
+        if (this._location.path() === '/login') {
+            return 'app/assets/images/login/knot.jpg';
+        } else {
+            return 'app/assets/images/header.png';
+        }
+    }
+    
+    constructor (public guestService: GuestService, private _router: Router, private _location: Location) {
     }
 }
