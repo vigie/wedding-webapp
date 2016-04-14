@@ -2,4 +2,20 @@ header {
     border: 1px solid grey;
     min-height: 200px;
     margin-bottom: 20px;
+    display: flex;
+    flex-direction: column;
 }
+
+h2 {
+    text-align: center;
+}
+
+.mt-title {
+    flex: 1;
+}
+
+.mt-logout {
+    flex: 0;
+    align-self: flex-end;
+}
+

@@ -1,8 +1,21 @@
 <h3>{{welcomeMessage}}</h3>
+
 <form [ngFormModel]="form">
-    <input [hidden]="pageState === EMAIL_SENT" [(ngModel)]="email" type="email" name="email" required ngControl="emailControl" placeholder="email">
-    <input [hidden]="pageState !== SEND_EMAIL" [(ngModel)]="name" type="text" name="name" required ngControl="nameControl" placeholder="Name">
-    <button class="btn btn-success" [hidden]="pageState !== LOGIN" (click)="login($event)" [disabled]="!formValid()">Log in</button>
-    <button class="btn btn-info" [hidden]="pageState !== SEND_EMAIL" (click)="sendEmail()" [disabled]="!formValid()">Send</button>
-    <button class="btn btn-info" [hidden]="pageState === LOGIN" (click)="backToLogin()">Back to login</button>
+    <fieldset class="form-group row" *ngIf="pageState !== EMAIL_SENT">
+        <label for="email" class="col-xs-12">Email address</label>
+        <div class="col-md-8">
+            <input [(ngModel)]="email" [disabled]="pageState === SEND_EMAIL" type="email" class="form-control" id="email" name="email" required ngControl="emailControl" placeholder="Enter email">
+        </div>
+    </fieldset> 
+    <fieldset class="form-group row" *ngIf="pageState === SEND_EMAIL">
+        <label for="nameId" class="col-xs-12">Name</label>
+        <div class="col-md-8">
+            <input [(ngModel)]="name" type="text" class="form-control" id="nameId" name="nameId" required ngControl="nameControl" placeholder="Enter Name">
+        </div>
+    </fieldset>
+    <button class="btn btn-success" *ngIf="pageState === LOGIN" (click)="login($event)" [disabled]="!formValid()">Log in</button>
+    <span *ngIf="pageState === SEND_EMAIL">
+        <button class="btn btn-info" (click)="sendEmail()" [disabled]="!formValid()">Send</button> or
+    </span>
+    <button class="btn btn-info" *ngIf="pageState !== LOGIN" (click)="backToLogin()">Back to login</button>
 </form>
