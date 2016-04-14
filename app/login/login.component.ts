@@ -67,9 +67,9 @@ export class LoginComponent {
                 }
                 this._guestService.loggedInGuest = guest;
                 this.email = '';
+                this._router.navigate(['Events', {}]);
                 event.preventDefault();
                 event.stopPropagation();
-                this._router.navigate(['Events', {}]);
             },
             error => {
 

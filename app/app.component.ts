@@ -28,9 +28,9 @@ export class AppComponent {
     
     logOut($event: Event) {
         this.guestService.loggedInGuest = null;
+        this._router.navigate(['Login']);
         $event.stopPropagation();
         $event.preventDefault();
-        this._router.navigate(['Login']);
     }
     
     get headerImage() {
