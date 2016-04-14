@@ -42,6 +42,10 @@ export class EventsComponent implements OnInit {
         )
     }
     
+    test() {
+        console.log('clicked');
+    }
+    
     ngOnInit() {
         this._guestService.getLoggedInGuest()
             .then((guest: Guest) => {

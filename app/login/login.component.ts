@@ -8,7 +8,6 @@ import {appInjector} from '../app-injector';
 import {EmailService} from '../email.service';
 
 @Component({
-  selector: 'mt-login',
   templateUrl: 'app/login/login.html',
   styleUrls: ['app/login/login.css'],
   directives: [FORM_DIRECTIVES]
