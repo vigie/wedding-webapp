@@ -79,11 +79,9 @@ app.post('/api/email', function(req, res) {
         }, 
         function (err, json) {
             if (err) {
-                console.log(req.body);
                 console.log(err);
                 res.send(err);
             } else {
-                console.log(req.body);
                 console.log(json); 
                 res.send(json);
             }
@@ -110,12 +108,71 @@ app.put('/api/guests', function(req, res) {
                 count--;
                 updatedGuests.push(doc);
                 if (count === 0) {
+                    sendRsvpEmail(updatedGuests);
                     res.send(updatedGuests);
                 }
             }
         });
     }, this);
 });
+
+function sendRsvpEmail(guests) {
+    if (!guests || !guests.length) {
+        return;
+    }
+    var guest1 = guests[0];
+    var guest2;
+    if (guests.length > 1) {
+        guest2 = guests[1];
+    }
+    var subject = 'RSVP from ' + guest1.firstName;
+    if (guest2) {
+        subject += ' and ' + guest2.firstName;
+    }
+    
+    var guest1Body = guest1.firstName + ' ' + guest1.lastName + ' RSVP:\n\n';
+    if (guest1.gsy_invite === 'yes') {
+        guest1Body += 'Guernsey: ' + guest1.gsy_response + '\n\n';
+    }
+    if (guest1.sf_invite === 'yes') {
+        guest1Body += 'SF: ' + guest1.sf_response + '\n\n';
+    }
+    if (guest1.sc_invite === 'yes') {
+        guest1Body += 'SC: ' + guest1.sc_response + '\n\n';
+    }
+    
+    var guest2Body = '\n\n';
+    if (guest2) {
+        guest2Body += guest2.firstName + ' ' + guest2.lastName + ' RSVP:\n\n';
+        if (guest2.gsy_invite === 'yes') {
+            guest2Body += 'Guernsey: ' + guest2.gsy_response + '\n\n';
+        }
+        if (guest2.sf_invite === 'yes') {
+            guest2Body += 'SF: ' + guest2.sf_response + '\n\n';
+        }
+        if (guest2.sc_invite === 'yes') {
+            guest2Body += 'SC: ' + guest2.sc_response + '\n\n';
+        }
+    }
+    
+    var body = guest1Body + guest2Body;
+    
+    Sendgrid.send(
+        {
+            from: 'mattandtamaraswedding@gmail.com', // From address
+            to: 'mattandtamaraswedding@gmail.com', // To address
+            subject: subject, // Subject
+            text: body // Content
+        }, 
+        function (err, json) {
+            if (err) {
+                console.log(req.body);
+            } else {
+                console.log(json);
+            }
+        });     
+    
+}
 
 // Get guest by email
 app.get('/api/guests', function(req, res) {

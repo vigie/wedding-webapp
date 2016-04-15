@@ -1,122 +1,118 @@
-<!--<div class="container-fluid">-->
-    
-    <!-- Welcome -->
-    <div class="row">    
-        <h3>{{guest?.welcomeMsg}}</h3>
-    </div> 
-    <div class="row">    
-        <p>Please let us know which of the following events you will be joining us for:</p>
-    </div>
+<!-- Welcome -->
+<div class="row">    
+    <h3>{{guest?.welcomeMsg}}</h3>
+</div> 
+<div class="row">    
+    <p>Please let us know which of the following events you will be joining us for:</p>
+</div>
 
-    <!-- Events list -->
-    <div class="row">    
-        <div class="container-fluid">
-            <!-- Name headers -->
-            <div class="row">
-                <p class="col-md-offset-4 col-md-4 hidden-sm-down">Can you make it {{guest?.firstName}}?</p>
-                <p *ngIf="plusOne" class="col-md-4 hidden-sm-down">Will {{plusOne?.firstName}} be joining you?</p>
-            </div>
-            <!-- Guernsey event -->
-            <div class="row" *ngIf="guest && guest?.gsy_invite === 'yes'">
-                <!-- Event label -->
-                <a class="mt-event-link h4 col-xs-12 col-md-4" href="#" [routerLink]="['Guernsey']">Guernsey</a>
-                <!-- Guest radio -->
-                <p class="col-xs-4 hidden-md-up">{{guest?.firstName}}</p>
-                <div class="col-xs-8 col-md-4 btn-group" data-toggle="buttons">
-                    <label class="btn btn-sm btn-info-outline" (click)="guest.gsy_response = 'yes'" [class.active]="guest?.gsy_response === 'yes'">
-                        <input type="radio" name="guestGuernseyRsvp" autocomplete="off"> Yes
-                    </label>
-                    <label class="btn btn-sm btn-info-outline" (click)="guest.gsy_response = 'no'" [class.active]="guest?.gsy_response === 'no'">
-                        <input type="radio" name="guestGuernseyRsvp" autocomplete="off"> No
-                    </label>
-                </div>
-                <div class="clearfix hidden-md-up"></div>
-                <!-- PlusOne radio -->
-                <p *ngIf="plusOne" class="col-xs-4 hidden-md-up">{{plusOne?.firstName}}</p>
-                <div *ngIf="plusOne" class="col-xs-8 col-md-4 btn-group" data-toggle="buttons">
-                    <label class="btn btn-sm btn-info-outline" (click)="plusOne.gsy_response = 'yes'" [class.active]="plusOne?.gsy_response === 'yes'">
-                        <input type="radio" name="plusOneGuernseyRsvp" autocomplete="off"> Yes
-                    </label>
-                    <label class="btn btn-sm btn-info-outline" (click)="plusOne.gsy_response = 'no'" [class.active]="plusOne?.gsy_response === 'no'">
-                        <input type="radio" name="plusOneGuernseyRsvp" autocomplete="off"> No
-                    </label>
-                </div>
-                <hr class="col-xs-12">
-            </div>
-
-            <!-- SF event -->
-            <div class="row" *ngIf="guest && guest?.sf_invite === 'yes'">
-                <!-- Event label -->
-                <a class="mt-event-link h4 col-xs-12 col-md-4" href="#" [routerLink]="['SF']">San Francisco</a>
-                <!-- Guest radio -->
-                <p class="col-xs-4 hidden-md-up">{{guest?.firstName}}</p>
-                <div class="col-xs-8 col-md-4 btn-group" data-toggle="buttons">
-                    <label class="btn btn-sm btn-info-outline" (click)="guest.sf_response = 'yes'" [class.active]="guest?.sf_response === 'yes'">
-                        <input type="radio" name="guestSFRsvp" autocomplete="off"> Yes
-                    </label>
-                    <label class="btn btn-sm btn-info-outline" (click)="guest.sf_response = 'no'" [class.active]="guest?.sf_response === 'no'">
-                        <input type="radio" name="guestSFRsvp" autocomplete="off"> No
-                    </label>
-                </div>
-                <div class="clearfix hidden-md-up"></div>
-                <!-- PlusOne radio -->
-                <p *ngIf="plusOne" class="col-xs-4 hidden-md-up">{{plusOne?.firstName}}</p>
-                <div *ngIf="plusOne" class="col-xs-8 col-md-4 btn-group" data-toggle="buttons">
-                    <label class="btn btn-sm btn-info-outline" (click)="plusOne.sf_response = 'yes'" [class.active]="plusOne?.sf_response === 'yes'">
-                        <input type="radio" name="plusOneSFRsvp" autocomplete="off"> Yes
-                    </label>
-                    <label class="btn btn-sm btn-info-outline" (click)="plusOne.sf_response = 'no'" [class.active]="plusOne?.sf_response === 'no'">
-                        <input type="radio" name="plusOneSFRsvp" autocomplete="off"> No
-                    </label>
-                </div>
-                <hr class="col-xs-12">                
-            </div>        
-
-            <!-- SC event -->
-            <div class="row" *ngIf="guest && guest?.sc_invite === 'yes'">
-                <!-- Event label -->
-                <a class="mt-event-link h4 col-xs-12 col-md-4" href="#" [routerLink]="['SC']">Santa Cruz</a>
-                <!-- Guest radio -->
-                <p class="col-xs-4 hidden-md-up">{{guest?.firstName}}</p>
-                <div class="col-xs-8 col-md-4 btn-group" data-toggle="buttons">
-                    <label class="btn btn-sm btn-info-outline" (click)="guest.sc_response = 'yes'" [class.active]="guest?.sc_response === 'yes'">
-                        <input type="radio" name="guestSCRsvp" autocomplete="off"> Yes
-                    </label>
-                    <label class="btn btn-sm btn-info-outline" (click)="guest.sc_response = 'no'" [class.active]="guest?.sc_response === 'no'">
-                        <input type="radio" name="guestSCRsvp" autocomplete="off"> No
-                    </label>
-                </div>
-                <div class="clearfix hidden-md-up"></div>
-                <!-- PlusOne radio -->
-                <p *ngIf="plusOne" class="col-xs-4 hidden-md-up">{{plusOne?.firstName}}</p>
-                <div *ngIf="plusOne" class="col-xs-8 col-md-4 btn-group" data-toggle="buttons">
-                    <label class="btn btn-sm btn-info-outline" (click)="plusOne.sc_response = 'yes'" [class.active]="plusOne?.sc_response === 'yes'">
-                        <input type="radio" name="plusOneSCRsvp" autocomplete="off"> Yes
-                    </label>
-                    <label class="btn btn-sm btn-info-outline" (click)="plusOne.sc_response = 'no'" [class.active]="plusOne?.sc_response === 'no'">
-                        <input type="radio" name="plusOneSCRsvp" autocomplete="off"> No
-                    </label>
-                </div>
-                <hr class="col-xs-12">                
-            </div>           
+<!-- Events list -->
+<div class="row">    
+    <div class="container-fluid">
+        <!-- Name headers -->
+        <div class="row">
+            <p class="col-md-offset-4 col-md-4 hidden-sm-down">Can you make it {{guest?.firstName}}?</p>
+            <p *ngIf="plusOne" class="col-md-4 hidden-sm-down">Will {{plusOne?.firstName}} be joining you?</p>
         </div>
-    </div>
-    
-    <!-- Save button -->
-    <div class="row">
-        <div class="col-xs-8 col-xs-offset-4">
-            <button class="btn btn-success" (click)="rsvp()">Save Changes</button> 
+        <!-- Guernsey event -->
+        <div class="row" *ngIf="guest && guest?.gsy_invite === 'yes'">
+            <!-- Event label -->
+            <a class="mt-event-link h4 col-xs-12 col-md-4" href="#" [routerLink]="['Guernsey']">Guernsey</a>
+            <!-- Guest radio -->
+            <p class="col-xs-4 hidden-md-up">{{guest?.firstName}}</p>
+            <div class="col-xs-8 col-md-4 btn-group" data-toggle="buttons">
+                <label class="btn btn-sm btn-info-outline" (click)="guest.gsy_response = 'yes'" [class.active]="guest?.gsy_response === 'yes'">
+                    <input type="radio" name="guestGuernseyRsvp" autocomplete="off"> Yes
+                </label>
+                <label class="btn btn-sm btn-info-outline" (click)="guest.gsy_response = 'no'" [class.active]="guest?.gsy_response === 'no'">
+                    <input type="radio" name="guestGuernseyRsvp" autocomplete="off"> No
+                </label>
+            </div>
+            <div class="clearfix hidden-md-up"></div>
+            <!-- PlusOne radio -->
+            <p *ngIf="plusOne" class="col-xs-4 hidden-md-up">{{plusOne?.firstName}}</p>
+            <div *ngIf="plusOne" class="col-xs-8 col-md-4 btn-group" data-toggle="buttons">
+                <label class="btn btn-sm btn-info-outline" (click)="plusOne.gsy_response = 'yes'" [class.active]="plusOne?.gsy_response === 'yes'">
+                    <input type="radio" name="plusOneGuernseyRsvp" autocomplete="off"> Yes
+                </label>
+                <label class="btn btn-sm btn-info-outline" (click)="plusOne.gsy_response = 'no'" [class.active]="plusOne?.gsy_response === 'no'">
+                    <input type="radio" name="plusOneGuernseyRsvp" autocomplete="off"> No
+                </label>
+            </div>
+            <hr class="col-xs-12">
         </div>
+
+        <!-- SF event -->
+        <div class="row" *ngIf="guest && guest?.sf_invite === 'yes'">
+            <!-- Event label -->
+            <a class="mt-event-link h4 col-xs-12 col-md-4" href="#" [routerLink]="['SF']">San Francisco</a>
+            <!-- Guest radio -->
+            <p class="col-xs-4 hidden-md-up">{{guest?.firstName}}</p>
+            <div class="col-xs-8 col-md-4 btn-group" data-toggle="buttons">
+                <label class="btn btn-sm btn-info-outline" (click)="guest.sf_response = 'yes'" [class.active]="guest?.sf_response === 'yes'">
+                    <input type="radio" name="guestSFRsvp" autocomplete="off"> Yes
+                </label>
+                <label class="btn btn-sm btn-info-outline" (click)="guest.sf_response = 'no'" [class.active]="guest?.sf_response === 'no'">
+                    <input type="radio" name="guestSFRsvp" autocomplete="off"> No
+                </label>
+            </div>
+            <div class="clearfix hidden-md-up"></div>
+            <!-- PlusOne radio -->
+            <p *ngIf="plusOne" class="col-xs-4 hidden-md-up">{{plusOne?.firstName}}</p>
+            <div *ngIf="plusOne" class="col-xs-8 col-md-4 btn-group" data-toggle="buttons">
+                <label class="btn btn-sm btn-info-outline" (click)="plusOne.sf_response = 'yes'" [class.active]="plusOne?.sf_response === 'yes'">
+                    <input type="radio" name="plusOneSFRsvp" autocomplete="off"> Yes
+                </label>
+                <label class="btn btn-sm btn-info-outline" (click)="plusOne.sf_response = 'no'" [class.active]="plusOne?.sf_response === 'no'">
+                    <input type="radio" name="plusOneSFRsvp" autocomplete="off"> No
+                </label>
+            </div>
+            <hr class="col-xs-12">                
+        </div>        
+
+        <!-- SC event -->
+        <div class="row" *ngIf="guest && guest?.sc_invite === 'yes'">
+            <!-- Event label -->
+            <a class="mt-event-link h4 col-xs-12 col-md-4" href="#" [routerLink]="['SC']">Santa Cruz</a>
+            <!-- Guest radio -->
+            <p class="col-xs-4 hidden-md-up">{{guest?.firstName}}</p>
+            <div class="col-xs-8 col-md-4 btn-group" data-toggle="buttons">
+                <label class="btn btn-sm btn-info-outline" (click)="guest.sc_response = 'yes'" [class.active]="guest?.sc_response === 'yes'">
+                    <input type="radio" name="guestSCRsvp" autocomplete="off"> Yes
+                </label>
+                <label class="btn btn-sm btn-info-outline" (click)="guest.sc_response = 'no'" [class.active]="guest?.sc_response === 'no'">
+                    <input type="radio" name="guestSCRsvp" autocomplete="off"> No
+                </label>
+            </div>
+            <div class="clearfix hidden-md-up"></div>
+            <!-- PlusOne radio -->
+            <p *ngIf="plusOne" class="col-xs-4 hidden-md-up">{{plusOne?.firstName}}</p>
+            <div *ngIf="plusOne" class="col-xs-8 col-md-4 btn-group" data-toggle="buttons">
+                <label class="btn btn-sm btn-info-outline" (click)="plusOne.sc_response = 'yes'" [class.active]="plusOne?.sc_response === 'yes'">
+                    <input type="radio" name="plusOneSCRsvp" autocomplete="off"> Yes
+                </label>
+                <label class="btn btn-sm btn-info-outline" (click)="plusOne.sc_response = 'no'" [class.active]="plusOne?.sc_response === 'no'">
+                    <input type="radio" name="plusOneSCRsvp" autocomplete="off"> No
+                </label>
+            </div>
+            <hr class="col-xs-12">                
+        </div>           
     </div>
-    <div class="row">
-        <div class="col-xs-8 col-xs-offset-4">
-        <div *ngIf="showSuccessMsg" class="alert alert-success alert-dismissible fade in mt-save-success" role="alert">
+</div>
+
+<!-- Save button -->
+<div class="row">
+    <div class="col-xs-12 col-md-offset-4 col-md-8">
+        <div *ngIf="showSuccessMsg" class="alert alert-success alert-dismissible fade in" role="alert">
             <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="showSuccessMsg=false">
                 <span aria-hidden="true">&times;</span>
             </button>
             Changes saved, thanks for RSVPing :-)
-        </div>  
-        </div>      
+        </div>    
     </div>
-    
-<!--</div>-->
+</div>
+<div class="row">
+    <div class="col-xs-12 col-md-offset-4 col-md-8">
+        <button class="btn btn-success" (click)="rsvp()">Save Changes</button> 
+    </div>
+</div>
