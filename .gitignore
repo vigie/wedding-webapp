@@ -2,3 +2,4 @@ typings/
 node_modules/
 app/**/*.js
 *.js.map
+!app/libs/*.js
