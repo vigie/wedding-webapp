@@ -11,7 +11,7 @@ var Sendgrid = require('sendgrid')(process.env.SENDGRID_API_KEY);
 
 // configuration =================
 
-mongoose.connect('mongodb://' + argv.be_ip + ':80/my_database');
+mongoose.connect('mongodb://' + argv.be_ip + ':8080/my_database');
 app.use('/app', express.static(__dirname + '/app'));
 app.use('/node_modules', express.static(__dirname + '/node_modules'));
 
