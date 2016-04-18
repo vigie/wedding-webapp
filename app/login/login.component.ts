@@ -18,7 +18,7 @@ import {appInjector} from '../app-injector';
     let router = injector.get(Router);
     return guestService.getLoggedInGuest()
         .then(() => {
-            router.navigate(['Events']);
+            router.navigate(['RSVP']);
             return false;
         })
         .catch(() => true);
@@ -61,13 +61,13 @@ export class LoginComponent {
             .subscribe( guest => {
                 this._guestService.loggedInGuest = guest;
                 this.email = '';
-                this._router.navigate(['Events', {}]);
+                this._router.navigate(['RSVP', {}]);
                 event.preventDefault();
                 event.stopPropagation();
             },
             error => {
                 this._guestService.loggedInGuest = null;
-                this._welcomeMessage = `Sorry, we seem to have a different email address for you. Tell us your name so we can update our records.`
+                this._welcomeMessage = `Sorry, we seem to have a different email address for you. Please tell us your full name so we can update our records.`
                 this.pageState = this.SEND_EMAIL;
             });
     }
@@ -76,7 +76,7 @@ export class LoginComponent {
         this._guestService.sendUnknownGuest(this.email, this.name)
             .subscribe(
                 () => {
-                    this._welcomeMessage = `Thanks ${this.name}, we received your message and will update our records with the correct email ASAP.`;
+                    this._welcomeMessage = `Thanks ${this.name}, we received your message and will email you once we have updated our records.`;
                     this.pageState = this.EMAIL_SENT;                    
                 },
                 error => {

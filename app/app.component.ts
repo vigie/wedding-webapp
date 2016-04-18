@@ -15,11 +15,11 @@ import {SCComponent} from './santa-cruz/sc.component';
 })
 @RouteConfig([
   {path:'/login', name: 'Login', component: LoginComponent, useAsDefault: true},
-  {path:'/events', name: 'Events', component: EventsComponent},
-  {path:'/events/guernsey', name: 'Guernsey', component: GuernseyComponent},
-  {path:'/events/sf', name: 'SF', component: SFComponent},
-  {path:'/events/sc', name: 'SC', component: SCComponent},
-  {path: '/**', redirectTo: ['Events']}
+  {path:'/rsvp', name: 'RSVP', component: EventsComponent},
+  {path:'/guernsey', name: 'Guernsey', component: GuernseyComponent},
+  {path:'/sf', name: 'SF', component: SFComponent},
+  {path:'/sc', name: 'SC', component: SCComponent},
+  {path: '/**', redirectTo: ['Login']}
 ])
 export class AppComponent {
     

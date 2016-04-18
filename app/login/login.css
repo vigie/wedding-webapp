@@ -1,3 +1,7 @@
-.mt-center-text {
-    text-align: center;
+.mt-welcome-msg {
+    margin-bottom: 10px;
+}
+
+.mt-login {
+    margin-bottom: 100px;
 }

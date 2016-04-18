@@ -2,3 +2,12 @@
     border-bottom: 1px solid lightgray;
     margin-bottom: 8px;
 }
+
+.mt-event-link {
+    text-decoration: underline;
+    color: #0275d8;
+}
+
+.mt-event-date {
+    font-style: italic;
+}
