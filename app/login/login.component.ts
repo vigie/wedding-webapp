@@ -3,9 +3,9 @@ import {GuestService} from '../guests/guests.service';
 import {Guest} from '../guests/guest';
 import {Control, FORM_DIRECTIVES, ControlGroup, Validators, FormBuilder} from 'angular2/common';
 import {EmailValidator} from './email.validator';
+import {NameValidator} from './name.validator';
 import {Router, CanActivate} from 'angular2/router';
 import {appInjector} from '../app-injector';
-import {EmailService} from '../email.service';
 
 @Component({
   templateUrl: 'app/login/login.html',
@@ -25,7 +25,7 @@ import {EmailService} from '../email.service';
 })
 export class LoginComponent {
     
-    private _initialGreeting = 'Hello stranger! Let us know who you are by entering your email below:';
+    private _initialGreeting = 'Hello stranger, please enter your email.';
     private _welcomeMessage: string;
     get welcomeMessage(): string {
         let user = this._guestService.loggedInGuest;
@@ -59,12 +59,6 @@ export class LoginComponent {
     login($event: Event) {
         this._guestService.getGuestByEmail(this.email)
             .subscribe( guest => {
-                if (!guest) {
-                    this._guestService.loggedInGuest = null;
-                    this._welcomeMessage = `Sorry, we seem to have a different email address for you. Tell us your name so we can update our records.`
-                    this.pageState = this.SEND_EMAIL;
-                    return;
-                }
                 this._guestService.loggedInGuest = guest;
                 this.email = '';
                 this._router.navigate(['Events', {}]);
@@ -72,22 +66,24 @@ export class LoginComponent {
                 event.stopPropagation();
             },
             error => {
-
+                this._guestService.loggedInGuest = null;
+                this._welcomeMessage = `Sorry, we seem to have a different email address for you. Tell us your name so we can update our records.`
+                this.pageState = this.SEND_EMAIL;
             });
     }
     
-    sendEmail() {
-        this._emailService.sendEmail(this.email, this.name)
+    sendUnknownGuest() {
+        this._guestService.sendUnknownGuest(this.email, this.name)
             .subscribe(
                 () => {
                     this._welcomeMessage = `Thanks ${this.name}, we received your message and will update our records with the correct email ASAP.`;
                     this.pageState = this.EMAIL_SENT;                    
+                },
+                error => {
+                    this._welcomeMessage = `Oh no, something went wrong :-(. Matt has been notified. Please check back again soon.`
+                    this.pageState = this.EMAIL_SENT;
                 }
             );
-            // .finally(() => {
-            //     this._welcomeMessage = `Thanks ${this.name}, we received your message and will update our records with the correct email ASAP.`;
-            //     this.pageState = this.EMAIL_SENT;
-            // });
     }
     
     backToLogin() {
@@ -97,11 +93,11 @@ export class LoginComponent {
         this._welcomeMessage = this._initialGreeting;
     }
     
-    constructor(private _guestService: GuestService, private _builder: FormBuilder, private _router: Router, private _emailService: EmailService) {
+    constructor(private _guestService: GuestService, private _builder: FormBuilder, private _router: Router) {
         this.pageState = this.LOGIN;
         this._welcomeMessage = this._initialGreeting;
         this.emailControl = new Control('', Validators.compose([Validators.required, EmailValidator.emailFormat]) );
-        this.nameControl = new Control('', Validators.compose([Validators.required]) );
+        this.nameControl = new Control('', Validators.compose([Validators.required, NameValidator.nameFormat]) );
         this.form = this._builder.group({
             emailControl: this.emailControl,
             nameControl: this.nameControl

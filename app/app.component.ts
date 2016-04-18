@@ -7,13 +7,10 @@ import {Router, Location} from 'angular2/router';
 import {GuernseyComponent} from './guernsey/guernsey.component';
 import {SFComponent} from './san-fran/sf.component';
 import {SCComponent} from './santa-cruz/sc.component';
-import {EmailService} from './email.service';
-
 @Component({
-    selector: 'my-app',
+    selector: 'mt-app',
     templateUrl: 'app/app.html',
     directives: [ROUTER_DIRECTIVES],
-    providers: [EmailService],
     styleUrls: ['app/app.css']
 })
 @RouteConfig([
@@ -42,5 +39,10 @@ export class AppComponent {
     }
     
     constructor (public guestService: GuestService, private _router: Router, private _location: Location) {
+        // Hack to scroll top top on navigate.
+        // (autoscroll not yet implemented in ng2)
+        _router.subscribe(() => {
+            window.scrollTo(0, 0);
+        });
     }
 }

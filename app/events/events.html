@@ -1,13 +1,19 @@
 <!-- Welcome -->
 <div class="row">    
+    <div class="col-xs-12 col-md-8 col-md-offset-2 mt-center-text">
     <h3>{{guest?.welcomeMsg}}</h3>
+    </div>
 </div> 
+
 <div class="row">    
+    <div class="col-xs-12 col-md-8 col-md-offset-2 mt-center-text">
     <p>Please let us know which of the following events you will be joining us for:</p>
+    </div>
 </div>
 
 <!-- Events list -->
 <div class="row">    
+    <div class="col-xs-12 col-md-8 col-md-offset-2">
     <div class="container-fluid">
         <!-- Name headers -->
         <div class="row">
@@ -39,8 +45,9 @@
                     <input type="radio" name="plusOneGuernseyRsvp" autocomplete="off"> No
                 </label>
             </div>
-            <hr class="col-xs-12">
         </div>
+        
+        <div class="row mt-hr" *ngIf="guest?.sf_invite || guest?.sc_invite"></div>
 
         <!-- SF event -->
         <div class="row" *ngIf="guest && guest?.sf_invite === 'yes'">
@@ -66,9 +73,10 @@
                 <label class="btn btn-sm btn-info-outline" (click)="plusOne.sf_response = 'no'" [class.active]="plusOne?.sf_response === 'no'">
                     <input type="radio" name="plusOneSFRsvp" autocomplete="off"> No
                 </label>
-            </div>
-            <hr class="col-xs-12">                
-        </div>        
+            </div>               
+        </div>       
+        
+        <div class="row mt-hr" *ngIf="guest?.sc_invite"></div> 
 
         <!-- SC event -->
         <div class="row" *ngIf="guest && guest?.sc_invite === 'yes'">
@@ -94,10 +102,14 @@
                 <label class="btn btn-sm btn-info-outline" (click)="plusOne.sc_response = 'no'" [class.active]="plusOne?.sc_response === 'no'">
                     <input type="radio" name="plusOneSCRsvp" autocomplete="off"> No
                 </label>
-            </div>
-            <hr class="col-xs-12">                
+            </div>             
         </div>           
     </div>
+</div>
+</div>
+
+<div class="col-xs-12 col-md-8 col-md-offset-2">
+<div class="row mt-hr"></div>
 </div>
 
 <!-- Save button -->
@@ -113,6 +125,16 @@
 </div>
 <div class="row">
     <div class="col-xs-12 col-md-offset-4 col-md-8">
+        <div *ngIf="showFailureMsg" class="alert alert-danger alert-dismissible fade in" role="alert">
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close" (click)="showFailureMsg=false">
+                <span aria-hidden="true">&times;</span>
+            </button>
+            Oh no, something went wrong :-(. Matt has been notified. Please try again soon.
+        </div>    
+    </div>
+</div>
+<div class="row">
+    <div class="col-xs-12 col-md-offset-8 col-md-4">
         <button class="btn btn-success" (click)="rsvp()">Save Changes</button> 
     </div>
 </div>

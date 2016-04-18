@@ -14,7 +14,7 @@ import {GuestService} from '../guests/guests.service';
     
     return guestService.getLoggedInGuest()
         .then((guest) => {
-            if(guest.gsy_invite === 'no') {
+            if(!guest.gsy_invite || guest.gsy_invite === 'no') {
                 router.navigate(['Events']);
                 return false;
             } else {

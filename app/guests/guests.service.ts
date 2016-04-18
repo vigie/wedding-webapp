@@ -41,57 +41,24 @@ export class GuestService {
                     this.loggedInGuest = user;
                     return user;
                 })
+                .catch(this.handleError);
         } else {
             return Promise.reject(null);
         }
     }
-    
-    // getGuests() {
-    //     return Promise.resolve(GUESTS);
-    // }
-    
-    getGuests() {
-        return this._http.get(GuestService._guestsURL)
-            .map(res => <Guest[]>res.json())
-            .catch(this.handleError);
-    }
-    
-    // getGuestById(id: string): Promise<Guest> {
-    //     let guest = GUESTS.filter(guest => guest.id === id)[0];
-    //     let promise = new Promise((resolve, reject) => {
-    //         if (guest) {
-    //             resolve(guest);
-    //         } else {
-    //             reject('no such guest');
-    //         }
-    //     });
-    //     return promise;
-    // }
-    
+
     getGuestById(id: string) {
         return this._http.get(GuestService._guestsURL + `/${id}`)
             .map(res => <Guest>res.json())
             .catch(this.handleError);
     }
 
-    // getGuestByEmail(email: string): Promise<Guest> {
-    //     email = email.toLowerCase();
-    //     let guest = GUESTS.filter(guest => guest.email.toLowerCase() === email)[0];
-    //     let promise = new Promise((resolve, reject) => {
-    //         if (guest) {
-    //             resolve(guest);
-    //         } else {
-    //             reject('no such guest');
-    //         }
-    //     });
-    //     return promise;
-    // }
-    
     updateGuests(guests: Guest[]) {
         let headers = new Headers({ 'Content-Type': 'application/json' });
         let options = new RequestOptions({ headers: headers });
         let body = JSON.stringify(guests);
-        return this._http.put(GuestService._guestsURL, body, options);
+        return this._http.put(GuestService._guestsURL, body, options)
+                .catch(this.handleError);
     }
     
     getGuestByEmail(email: string) {
@@ -100,6 +67,17 @@ export class GuestService {
             .map(res => <Guest>res.json())
             .catch(this.handleError);
     }
+    
+    sendUnknownGuest(email: string, name: string) {
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+        let body = JSON.stringify({ 
+            email: email,
+            name: name 
+        });
+        return this._http.post(GuestService._guestsURL + '/unknown', body, options)
+                .catch(this.handleError);
+    }    
     
     private handleError (error: Response) {
         console.error(error);

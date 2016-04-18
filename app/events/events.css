@@ -1,4 +1,4 @@
-.mt-event-link:hover, .mt-event-link:focus {
-    /*text-decoration: none;*/
+.mt-hr {
+    border-bottom: 1px solid lightgray;
+    margin-bottom: 8px;
 }
-

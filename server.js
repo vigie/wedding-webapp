@@ -12,7 +12,6 @@ var Sendgrid = require('sendgrid')(process.env.SENDGRID_API_KEY);
 // configuration =================
 
 mongoose.connect('mongodb://' + argv.be_ip + ':80/my_database');
-
 app.use('/app', express.static(__dirname + '/app'));
 app.use('/node_modules', express.static(__dirname + '/node_modules'));
 
@@ -21,32 +20,60 @@ app.use(bodyParser.urlencoded({'extended':'true'})); 			// parse application/x-w
 app.use(bodyParser.json()); 									// parse application/json
 app.use(bodyParser.json({ type: 'application/vnd.api+json' })); // parse application/vnd.api+json as json
 app.use(methodOverride());
+app.use(logErrors);
+//app.use(clientErrorHandler);
+
+// Error handling =================
+
+function logErrors(err, req, res, next) {
+  console.error(err.stack);
+  sendEmail('Server error', err.toString());
+  next(err);
+}
+
+// function clientErrorHandler(err, req, res, next) {
+//   if (req.xhr) {
+//     res.status(500).send({ error: err });
+//   } else {
+//     next(err);
+//   }
+// }
 
 // Define Schema
-var GuestSchema = new Schema({
-    _id: String,
-    firstName: String,
-    lastName: String,
-    email: String,
-    welcomeMsg: String,
-    plusOne: String,
-    gsy_invite: String,
-    sf_invite: String,
-    sc_invite: String,
-    gsy_response: String,
-    sf_response: String,
-    sc_response: String,
-    address: String,
-    phone: String,
-    relationship: String,
-    domiciled: String    
-});
 
-// Exclude sensitive fields not used by webapp
-GuestSchema.path('address').select(false);
-GuestSchema.path('phone').select(false);
-GuestSchema.path('relationship').select(false);
-GuestSchema.path('domiciled').select(false);
+function getIfInvited(value) {
+    if (value === 'yes') {
+        return value;
+    }
+}
+
+function getIfNotUnknown(value) {
+    if (value !== 'unknown') {
+        return value;
+    }
+}
+
+var GuestSchema = new Schema({
+    _id : {type: String},
+    firstName: {type: String},
+    lastName: {type: String},
+    email: {type: String, select: false},
+    welcomeMsg: {type: String},
+    plusOne: {type: String},
+    gsy_invite: {type: String, get: getIfInvited},
+    sf_invite: {type: String, get: getIfInvited},
+    sc_invite: {type: String, get: getIfInvited},
+    gsy_response: {type: String, get: getIfNotUnknown},
+    sf_response: {type: String, get: getIfNotUnknown},
+    sc_response: {type: String, get: getIfNotUnknown},
+    address: {type: String, select: false},
+    phone: {type: String, select: false},
+    relationship: {type: String, select: false},
+    domiciled: {type: String, select: false}
+}, {strict: true});
+
+GuestSchema.set('toObject', { getters: true });
+GuestSchema.set('toJSON', { getters: true });
 
 // define model =================
 var Guest = mongoose.model('Guest', GuestSchema);
@@ -55,53 +82,29 @@ var Guest = mongoose.model('Guest', GuestSchema);
 
 // api ---------------------------------------------------------------------
 
-app.post('/api/email', function(req, res) {
-    
+function sendEmail(subject, body, res) {
     Sendgrid.send(
         {
-            from: 'mattandtamaraswedding@gmail.com', // From address
-            to: 'mattandtamaraswedding@gmail.com', // To address
-            subject: 'Wrong email for ' + req.body.name, // Subject
-            text: req.body.name + '\'s email is ' + req.body.email // Content
+            from: 'mattandtamaraswedding@gmail.com',
+            to: 'mattandtamaraswedding@gmail.com',
+            subject: subject,
+            text: body
         }, 
         function (err, json) {
             if (err) {
                 console.log(err);
-                res.send(err);
+                if (res) {
+                    res.status(500).send({ error: err });
+                }
             } else {
-                console.log(json); 
-                res.send(json);
-            }
-        });    
-    
-});
-
-app.put('/api/guests', function(req, res) {
-    var guests = req.body;
-    //console.log(guests);
-    var options = {
-        upsert: false,
-        new: true
-    }
-    var updatedGuests = [];
-    var count = guests.length;
-    guests.forEach(function(guest) {
-        var id = guest._id;
-        delete guest._id;
-        Guest.findByIdAndUpdate(id, guest, function(err, doc) {
-            if (err) {
-                res.send(err);
-            } else {
-                count--;
-                updatedGuests.push(doc);
-                if (count === 0) {
-                    sendRsvpEmail(updatedGuests);
-                    res.send(updatedGuests);
+                console.log(json);
+                if (res) {
+                    res.json('email sent');
                 }
             }
-        });
-    }, this);
-});
+        }
+    ); 
+}
 
 function sendRsvpEmail(guests) {
     if (!guests || !guests.length) {
@@ -144,42 +147,88 @@ function sendRsvpEmail(guests) {
     
     var body = guest1Body + guest2Body;
     
-    Sendgrid.send(
-        {
-            from: 'mattandtamaraswedding@gmail.com', // From address
-            to: 'mattandtamaraswedding@gmail.com', // To address
-            subject: subject, // Subject
-            text: body // Content
-        }, 
-        function (err, json) {
-            if (err) {
-                console.log(req.body);
-            } else {
-                console.log(json);
-            }
-        });     
-    
+    sendEmail(subject, body, null)  
 }
+
+app.post('/api/guests/unknown', function(req, res) {
+    var subject = 'Wrong email for ' + req.body.name;
+    var body = req.body.name + '\'s email is ' + req.body.email;
+    sendEmail(subject, body, res); 
+});
+
+function updateGuestRSVP(dbGuest, sentGuest) {
+    var update = sentGuest.gsy_response;
+    if ((update === 'yes') || (update === 'no')) {
+        dbGuest.gsy_response = update;
+    }
+    update = sentGuest.sc_response;
+    if ((update === 'yes') || (update === 'no')) {
+        dbGuest.sc_response = update;
+    }
+    update = sentGuest.sf_response;
+    if ((update === 'yes') || (update === 'no')) {
+        dbGuest.sf_response = update;
+    }
+    dbGuest.save();
+}
+
+app.put('/api/guests', function(req, res) {
+    var guests = req.body;
+    var updatedGuests = [];
+    var count = guests.length;
+    if (!count) {
+        res.status(500).json('no guests sent');
+    }
+    guests.forEach(function(guest) {
+        var id = guest._id;
+        if (!id) {
+            res.status(500).json('guest with no id sent');
+            return;
+        }
+        delete guest._id;
+        Guest.findById(id, guest, function(err, doc) {
+            if (err) {
+                res.stats(500).send({error: err});
+            } else if (!doc) {
+                res.status(500).send({error: 'no guest found with id ' + req.params.guest_id});
+            } else {
+                count--;
+                updateGuestRSVP(doc, guest);          
+                updatedGuests.push(doc);
+                if (count === 0) {
+                    sendRsvpEmail(updatedGuests);
+                    res.send({updated: updatedGuests});
+                }
+            }
+        });
+    }, null);
+});
 
 // Get guest by email
 app.get('/api/guests', function(req, res) {
     if (req.query && req.query.email) {
         Guest.findOne({email: req.query.email}, function(err, guest) {
             if (err) {
-                res.send(err);
+                res.status(500).send({error: err});
+            } else if (!guest) {
+                res.status(500).send({error: 'no guest found with email ' + req.query.email});
+            } else {
+                res.json(guest)
             }
-            res.json(guest)
         });
         return;
     }
+    res.status(500).json('no guest email specified');
 });
 
+// Get guest by id
 app.get('/api/guests/:guest_id', function(req, res){
   return Guest.findById(req.params.guest_id, function(err, guest) {
     if (err) {
-        res.send(err);
+        res.status(500).send(err);
+    } else if (!guest) {
+        res.status(500).send({error: 'no guest found with id ' + req.params.guest_id});
     }
-    console.log(guest);
     return res.send(guest);
   });
 });

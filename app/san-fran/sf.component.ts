@@ -12,7 +12,7 @@ import {GuestService} from '../guests/guests.service';
     let router = injector.get(Router);
     return guestService.getLoggedInGuest()
         .then((guest) => {
-            if(guest.sf_invite === 'no') {
+            if(!guest.sf_invite || guest.sf_invite === 'no') {
                 router.navigate(['Events']);
                 return false;
             } else {

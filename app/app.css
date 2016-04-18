@@ -1,5 +1,12 @@
+.mt-main {
+    margin-left: 15px;
+    margin-right: 15px;
+    margin-bottom: 15px;
+}
+
 .mt-header {
     color: white;    
+    margin-bottom: 10px;
 }
 
 .mt-header-img {

@@ -28,6 +28,7 @@ export class EventsComponent implements OnInit {
     plusOne: Guest;
     
     showSuccessMsg = false;
+    showFailureMsg = false;
     
     rsvp() {
         let guests = [this.guest];
@@ -35,15 +36,9 @@ export class EventsComponent implements OnInit {
             guests.push(this.plusOne);
         }
         this._guestService.updateGuests(guests).subscribe(
-            updatedGuests => {
-                this.showSuccessMsg = true;
-            },
-            error => console.log(error)
+            updatedGuests => this.showSuccessMsg = true,
+            error => this.showFailureMsg = true
         )
-    }
-    
-    test() {
-        console.log('clicked');
     }
     
     ngOnInit() {
