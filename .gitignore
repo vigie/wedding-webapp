@@ -6,3 +6,5 @@ app/**/*.js
 setEnv.sh
 .vscode
 *.csv
+*.log
+.idea/
