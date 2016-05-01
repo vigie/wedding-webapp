@@ -225,9 +225,9 @@ app.get('/api/guests', function(req, res) {
 app.get('/api/guests/:guest_id', function(req, res){
   return Guest.findById(req.params.guest_id, function(err, guest) {
     if (err) {
-        res.status(500).send(err);
+        return res.status(500).send(err);
     } else if (!guest) {
-        res.status(500).send({error: 'no guest found with id ' + req.params.guest_id});
+        return res.status(500).send({error: 'no guest found with id ' + req.params.guest_id});
     }
     return res.send(guest);
   });
