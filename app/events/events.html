@@ -37,26 +37,26 @@
                     <!-- Event label -->
                     <a class="mt-event-link h4 col-xs-12 col-md-4 mt-event-link" href="#" [routerLink]="['Guernsey']">Guernsey</a>
                     <!-- Guest radio -->
-                    <p class="col-xs-4 hidden-md-up">{{guest?.firstName}}</p>
-                    <div class="col-xs-8 col-md-4 btn-group" data-toggle="buttons">
-                        <label class="btn btn-sm btn-info-outline" (click)="guest.gsy_response = 'yes'" [class.active]="guest?.gsy_response === 'yes'">
-                            <input type="radio" name="guestGuernseyRsvp" autocomplete="off"> Yes
-                        </label>
-                        <label class="btn btn-sm btn-info-outline" (click)="guest.gsy_response = 'no'" [class.active]="guest?.gsy_response === 'no'">
-                            <input type="radio" name="guestGuernseyRsvp" autocomplete="off"> No
-                        </label>
-                    </div>
-                    <div class="clearfix hidden-md-up"></div>
-                    <!-- PlusOne radio -->
-                    <p *ngIf="plusOne" class="col-xs-4 hidden-md-up">{{plusOne?.firstName}}</p>
-                    <div *ngIf="plusOne" class="col-xs-8 col-md-4 btn-group" data-toggle="buttons">
-                        <label class="btn btn-sm btn-info-outline" (click)="plusOne.gsy_response = 'yes'" [class.active]="plusOne?.gsy_response === 'yes'">
-                            <input type="radio" name="plusOneGuernseyRsvp" autocomplete="off"> Yes
-                        </label>
-                        <label class="btn btn-sm btn-info-outline" (click)="plusOne.gsy_response = 'no'" [class.active]="plusOne?.gsy_response === 'no'">
-                            <input type="radio" name="plusOneGuernseyRsvp" autocomplete="off"> No
-                        </label>
-                    </div>
+                    <!--<p class="col-xs-4 hidden-md-up">{{guest?.firstName}}</p>-->
+                    <!--<div class="col-xs-8 col-md-4 btn-group" data-toggle="buttons">-->
+                        <!--<label class="btn btn-sm btn-info-outline" (click)="guest.gsy_response = 'yes'" [class.active]="guest?.gsy_response === 'yes'">-->
+                            <!--<input type="radio" name="guestGuernseyRsvp" autocomplete="off"> Yes-->
+                        <!--</label>-->
+                        <!--<label class="btn btn-sm btn-info-outline" (click)="guest.gsy_response = 'no'" [class.active]="guest?.gsy_response === 'no'">-->
+                            <!--<input type="radio" name="guestGuernseyRsvp" autocomplete="off"> No-->
+                        <!--</label>-->
+                    <!--</div>-->
+                    <!--<div class="clearfix hidden-md-up"></div>-->
+                    <!--&lt;!&ndash; PlusOne radio &ndash;&gt;-->
+                    <!--<p *ngIf="plusOne" class="col-xs-4 hidden-md-up">{{plusOne?.firstName}}</p>-->
+                    <!--<div *ngIf="plusOne" class="col-xs-8 col-md-4 btn-group" data-toggle="buttons">-->
+                        <!--<label class="btn btn-sm btn-info-outline" (click)="plusOne.gsy_response = 'yes'" [class.active]="plusOne?.gsy_response === 'yes'">-->
+                            <!--<input type="radio" name="plusOneGuernseyRsvp" autocomplete="off"> Yes-->
+                        <!--</label>-->
+                        <!--<label class="btn btn-sm btn-info-outline" (click)="plusOne.gsy_response = 'no'" [class.active]="plusOne?.gsy_response === 'no'">-->
+                            <!--<input type="radio" name="plusOneGuernseyRsvp" autocomplete="off"> No-->
+                        <!--</label>-->
+                    <!--</div>-->
                 </div>
                 
                 <div class="row" *ngIf="guest && guest?.gsy_invite === 'yes'">
